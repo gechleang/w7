@@ -1,12 +1,7 @@
 import '../model/ride/ride_pref.dart';
 import '../repository/ride_preferences_repository.dart';
 
-////
-///   This service handles:
-///   - The past ride preferences
-///   - The currennt ride preferences
-///
-class RidePrefService {
+class RidePrefService extends ChangeNotifier {
   // Static private instance
   static RidePrefService? _instance;
 
@@ -16,42 +11,37 @@ class RidePrefService {
   // The current preference
   RidePreference? _currentPreference;
 
-  ///
-  /// Private constructor
-  ///
+  // Private constructor
   RidePrefService._internal(this.repository);
 
-  ///
-  /// Initialize
-  ///
+  // Initialize
   static void initialize(RidePreferencesRepository repository) {
     if (_instance == null) {
       _instance = RidePrefService._internal(repository);
     } else {
-      throw Exception("RidePreferencesService is already initialized.");
+      throw Exception("RidePrefService is already initialized.");
     }
   }
 
-  ///
-  /// Singleton accessor
-  ///
+  // Singleton accessor
   static RidePrefService get instance {
     if (_instance == null) {
       throw Exception(
-          "RidePreferencesService is not initialized. Call initialize() first.");
+          "RidePrefService is not initialized. Call initialize() first.");
     }
     return _instance!;
   }
 
   // Current preference
   RidePreference? get currentPreference {
-    print('Get  current  pref : $_currentPreference');
+    print('Get current pref : $_currentPreference');
     return _currentPreference;
   }
 
   void setCurrentPreference(RidePreference preference) {
     _currentPreference = preference;
     print('Set current pref to $_currentPreference');
+    notifyListeners(); // Added to support Provider's state management
   }
 
   // Past preferences
@@ -60,6 +50,12 @@ class RidePrefService {
   }
 
   void addPreference(RidePreference preference) {
-    return repository.addPreference(preference);
+    repository.addPreference(preference);
+    notifyListeners(); // Added to support Provider's state management
   }
+  
+  void notifyListeners() {}
+}
+
+class ChangeNotifier {
 }
