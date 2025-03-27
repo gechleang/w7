@@ -11,9 +11,7 @@ import 'widgets/ride_pref_history_tile.dart';
 
 const String blablaHomeImagePath = 'assets/images/blabla_home.png';
 
-/// This screen allows user to:
-/// - Enter his/her ride preference and launch a search on it
-/// - Or select a last entered ride preferences and launch a search on it
+
 class RidePrefScreen extends StatelessWidget {
   const RidePrefScreen({Set? key}) : super(key: key);
 
@@ -86,6 +84,9 @@ class RidePrefScreen extends StatelessWidget {
       ],
     );
   }
+}
+
+class StatelessWidget {
 }
 
 class ListView {
